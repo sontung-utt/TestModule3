@@ -1,6 +1,6 @@
-package service;
+package com.codegym.finalproject.service;
 
-import model.Room;
+import com.codegym.finalproject.model.Room;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,8 +85,7 @@ public class RoomService implements IService<Room>{
                 String formatTime = time.format(formatter);
                 int idPayment = resultSet.getInt("idPayment");
                 String note = resultSet.getString("note");
-                String paymentName = resultSet.getString("paymentName");
-                room = new Room(id,customerName,phone,formatTime,idPayment,note,paymentName);
+                room = new Room(id,customerName,phone,formatTime,idPayment,note);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

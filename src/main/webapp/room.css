@@ -15,7 +15,6 @@
 .main-info {
     width: calc(100% - 275px);
     height: 660px;
-    margin-left: 275px;
 }
 
 .main-info .info-product {

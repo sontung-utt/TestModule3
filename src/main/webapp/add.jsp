@@ -37,9 +37,9 @@
                 <tr>
                     <td class="info">
                         <i class="fa-solid fa-gamepad"></i>
-                        <label for="name">Tên khách hàng</label>
+                        <label for="customerName">Tên khách hàng</label>
                     </td>
-                    <td><input type="text" name="name" id="name"></td>
+                    <td><input type="text" name="customerName" id="customerName"></td>
                 </tr>
                 <tr>
                     <td class="info">

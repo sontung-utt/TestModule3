@@ -1,4 +1,4 @@
-package model;
+package com.codegym.finalproject.model;
 
 public class PaymentMethod {
     private int id;

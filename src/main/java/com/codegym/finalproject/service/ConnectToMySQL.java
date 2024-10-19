@@ -1,4 +1,4 @@
-package service;
+package com.codegym.finalproject.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

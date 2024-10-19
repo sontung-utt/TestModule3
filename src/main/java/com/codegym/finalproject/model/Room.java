@@ -1,4 +1,4 @@
-package model;
+package com.codegym.finalproject.model;
 
 public class Room {
     private int id;
@@ -7,7 +7,7 @@ public class Room {
     private String time;
     private int idPayment;
     private String note;
-    private String namePayment;
+    private String paymentName;
 
     public Room() {
     }
@@ -44,22 +44,22 @@ public class Room {
         this.note = note;
     }
 
-    public Room(int id, String customerName, String phone, String time, int idPayment, String note, String namePayment) {
+    public Room(int id, String customerName, String phone, String time, int idPayment, String note, String paymentName) {
         this.id = id;
         this.customerName = customerName;
         this.phone = phone;
         this.time = time;
         this.idPayment = idPayment;
         this.note = note;
-        this.namePayment = namePayment;
+        this.paymentName = paymentName;
     }
 
-    public String getNamePayment() {
-        return namePayment;
+    public String getPaymentName() {
+        return paymentName;
     }
 
-    public void setNamePayment(String namePayment) {
-        this.namePayment = namePayment;
+    public void setPaymentName(String paymentName) {
+        this.paymentName = this.paymentName;
     }
 
     public int getId() {

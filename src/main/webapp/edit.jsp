@@ -37,30 +37,30 @@
                 <tr>
                     <td class="info">
                         <i class="fa-solid fa-gamepad"></i>
-                        <label for="name">Tên khách hàng</label>
+                        <label for="customerName">Tên khách hàng</label>
                     </td>
-                    <td><input type="text" name="name" id="name"></td>
+                    <td><input type="text" name="customerName" id="customerName" value="${room.customerName}"></td>
                 </tr>
                 <tr>
                     <td class="info">
                         <i class="fa-solid fa-money-bill"></i>
                         <label for="phone">Số điện thoại</label>
                     </td>
-                    <td><input type="text" name="phone" id="phone"></td>
+                    <td><input type="text" name="phone" id="phone" value="${room.phone}"></td>
                 </tr>
                 <tr>
                     <td class="info">
                         <i class="fa-solid fa-layer-group"></i>
                         <label for="idPayment">Kiểu thanh toán</label>
                     </td>
-                    <td><input type="text" name="idPayment" id="idPayment"></td>
+                    <td><input type="text" name="idPayment" id="idPayment" value="${room.idPayment}"></td>
                 </tr>
                 <tr>
                     <td class="info">
                         <i class="fa-regular fa-image"></i>
                         <label for="note">Ghi chú</label>
                     </td>
-                    <td><input type="text" name="note" id="note"></td>
+                    <td><input type="text" name="note" id="note" value="${room.note}"></td>
                 </tr>
 
                 <tr>

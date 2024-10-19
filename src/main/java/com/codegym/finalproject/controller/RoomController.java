@@ -1,8 +1,8 @@
-package controller;
+package com.codegym.finalproject.controller;
 
-import model.Room;
-import service.IService;
-import service.RoomService;
+import com.codegym.finalproject.service.IService;
+import com.codegym.finalproject.model.Room;
+import com.codegym.finalproject.service.RoomService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

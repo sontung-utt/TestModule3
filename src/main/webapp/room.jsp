@@ -22,6 +22,7 @@
 </head>
 <body>
 <div class="container">
+    <h3>THÔNG TIN PHÒNG</h3>
     <div class="main-info">
         <div class="search">
             <div class="add-button">
