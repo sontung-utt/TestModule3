@@ -51,9 +51,16 @@
                 <tr>
                     <td class="info">
                         <i class="fa-solid fa-layer-group"></i>
+                        <label for="time">Ngày đặt phòng</label>
+                    </td>
+                    <td><input type="text" name="time" id="time" value="${room.time}"></td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <i class="fa-solid fa-layer-group"></i>
                         <label for="idPayment">Kiểu thanh toán</label>
                     </td>
-                    <td><input type="text" name="idPayment" id="idPayment" value="${room.idPayment}"></td>
+                    <td><input type="text" name="idPayment" id="idPayment" placeholder="1,2,3" value="${room.idPayment}"></td>
                 </tr>
                 <tr>
                     <td class="info">

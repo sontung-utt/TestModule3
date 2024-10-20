@@ -51,9 +51,16 @@
                 <tr>
                     <td class="info">
                         <i class="fa-solid fa-layer-group"></i>
+                        <label for="time">Ngày đặt phòng</label>
+                    </td>
+                    <td><input type="text" name="time" id="time"></td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <i class="fa-solid fa-layer-group"></i>
                         <label for="idPayment">Kiểu thanh toán</label>
                     </td>
-                    <td><input type="text" name="idPayment" id="idPayment"></td>
+                    <td><input type="text" name="idPayment" placeholder="1,2,3" id="idPayment"></td>
                 </tr>
                 <tr>
                     <td class="info">
@@ -66,7 +73,8 @@
 
                 <tr>
                     <td colspan="2" class="tdbtn">
-                        <a href=""><button>Thêm sản phẩm</button></a>
+                        <button type="submit">Thêm mới</button>
+                        <a href="http://localhost:8080/room?action=room"><button>Hủy</button></a>
                     </td>
                 </tr>
             </table>

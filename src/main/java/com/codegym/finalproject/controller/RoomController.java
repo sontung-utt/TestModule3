@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet(name = "RoomController", value = "/room")
@@ -93,9 +95,12 @@ public class RoomController extends HttpServlet {
     public void addRoom(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String customerName = req.getParameter("customerName");
         String phone = req.getParameter("phone");
+        String timeStr = req.getParameter("time");
         int idPayment = Integer.parseInt(req.getParameter("idPayment"));
         String note = req.getParameter("note");
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate time;
+        time = LocalDate.parse(timeStr,formatter);
         if (roomService.checkExistPhone(phone)) {
             req.setAttribute("errorMessage", "Số điện thoại đã được sử dụng!");
             showFormAdd(req, resp);
@@ -106,7 +111,18 @@ public class RoomController extends HttpServlet {
             showFormAdd(req, resp);
             return;
         }
-        Room room = new Room(customerName,phone,idPayment,note);
+        if (!roomService.checkValidDate(timeStr)){
+            req.setAttribute("errorMessage", "Ngày nhập không đúng định dạng dd/MM/yyyy!");
+            showFormAdd(req, resp);
+            return;
+        }
+        LocalDate currentDate = LocalDate.now();
+        if (time.isBefore(currentDate)) {
+            req.setAttribute("errorMessage", "Ngày đặt phòng không được là ngày quá khứ!");
+            showFormAdd(req, resp);
+            return;
+        }
+        Room room = new Room(customerName,phone,timeStr,idPayment,note);
         roomIService.add(room);
         resp.sendRedirect("/room?action=room");
     }
@@ -115,8 +131,12 @@ public class RoomController extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String customerName = req.getParameter("customerName");
         String phone = req.getParameter("phone");
+        String timeStr = req.getParameter("time");
         int idPayment = Integer.parseInt(req.getParameter("idPayment"));
         String note = req.getParameter("note");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate time;
+        time = LocalDate.parse(timeStr,formatter);
         Room existRoom = roomIService.findById(id);
         if (!existRoom.getPhone().equals(phone)){
             if (roomService.checkExistPhone(phone)) {
@@ -129,8 +149,19 @@ public class RoomController extends HttpServlet {
                 showFormAdd(req, resp);
                 return;
             }
+            if (!roomService.checkValidDate(timeStr)){
+                req.setAttribute("errorMessage", "Ngày nhập không đúng định dạng dd/MM/yyyy!");
+                showFormAdd(req, resp);
+                return;
+            }
+            LocalDate currentDate = LocalDate.now();
+            if (time.isBefore(currentDate)) {
+                req.setAttribute("errorMessage", "Ngày đặt phòng không được là ngày quá khứ!");
+                showFormAdd(req, resp);
+                return;
+            }
         }
-        Room room = new Room(id,customerName,phone,idPayment,note);
+        Room room = new Room(id,customerName,phone,timeStr,idPayment,note);
         roomIService.update(id,room);
         resp.sendRedirect("/room?action=room");
     }

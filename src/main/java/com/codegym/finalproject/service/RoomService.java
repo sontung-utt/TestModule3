@@ -6,8 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +21,15 @@ public class RoomService implements IService<Room>{
     }
     @Override
     public void add(Room room) {
-        String sql = "insert into room (customerName, phone, idPayment, note) \n" +
-                "values (?,?,?,?);";
+        String sql = "insert into room (customerName, phone, time, idPayment, note) \n" +
+                "values (?,?,?,?,?);";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,room.getCustomerName());
             preparedStatement.setString(2,room.getPhone());
-            preparedStatement.setInt(3,room.getIdPayment());
-            preparedStatement.setString(4, room.getNote());
+            preparedStatement.setString(3,room.getTime());
+            preparedStatement.setInt(4,room.getIdPayment());
+            preparedStatement.setString(5, room.getNote());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -36,15 +39,16 @@ public class RoomService implements IService<Room>{
     @Override
     public void update(int id, Room room) {
         String sql = "update room\n" +
-                "set customerName = ?, phone = ?, idPayment = ?, note = ?\n" +
+                "set customerName = ?, phone = ?, time = ?, idPayment = ?, note = ?\n" +
                 "where id = ?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,room.getCustomerName());
             preparedStatement.setString(2,room.getPhone());
-            preparedStatement.setInt(3,room.getIdPayment());
-            preparedStatement.setString(4, room.getNote());
-            preparedStatement.setInt(5,id);
+            preparedStatement.setString(3,room.getTime());
+            preparedStatement.setInt(4,room.getIdPayment());
+            preparedStatement.setString(5, room.getNote());
+            preparedStatement.setInt(6,id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -81,11 +85,10 @@ public class RoomService implements IService<Room>{
                 id = resultSet.getInt("id");
                 String customerName = resultSet.getString("customerName");
                 String phone = resultSet.getString("phone");
-                LocalDateTime time = resultSet.getTimestamp("time").toLocalDateTime();
-                String formatTime = time.format(formatter);
+                String time = resultSet.getString("time");
                 int idPayment = resultSet.getInt("idPayment");
                 String note = resultSet.getString("note");
-                room = new Room(id,customerName,phone,formatTime,idPayment,note);
+                room = new Room(id,customerName,phone,time,idPayment,note);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,12 +107,11 @@ public class RoomService implements IService<Room>{
                 int id = resultSet.getInt("id");
                 String customerName = resultSet.getString("customerName");
                 String phone = resultSet.getString("phone");
-                LocalDateTime time = resultSet.getTimestamp("time").toLocalDateTime();
-                String formatTime = time.format(formatter);
+                String time = resultSet.getString("time");
                 int idPayment = resultSet.getInt("idPayment");
                 String note = resultSet.getString("note");
                 String paymentName = resultSet.getString("paymentName");
-                Room room = new Room(id,customerName,phone,formatTime,idPayment,note,paymentName);
+                Room room = new Room(id,customerName,phone,time,idPayment,note,paymentName);
                 roomList.add(room);
             }
         } catch (SQLException e) {
@@ -141,26 +143,35 @@ public class RoomService implements IService<Room>{
 
     public List<Room> showRoomByName(String customerName){
         List<Room> roomList = new ArrayList<>();
-        String sql = "select * from room where customerName like ?;";
+        String sql = "select a.*,b.name as paymentName from room a join paymentMethod b on a.idPayment = b.id where customerName like ?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,"*"+customerName+"*");
+            preparedStatement.setString(1,"%"+customerName+"%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 customerName = resultSet.getString("customerName");
                 String phone = resultSet.getString("phone");
-                LocalDateTime time = resultSet.getTimestamp("time").toLocalDateTime();
-                String formatTime = time.format(formatter);
+                String time = resultSet.getString("time");
                 int idPayment = resultSet.getInt("idPayment");
                 String note = resultSet.getString("note");
                 String paymentName = resultSet.getString("paymentName");
-                Room room = new Room(id,customerName,phone,formatTime,idPayment,note,paymentName);
+                Room room = new Room(id,customerName,phone,time,idPayment,note,paymentName);
                 roomList.add(room);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return roomList;
+    }
+
+    public boolean checkValidDate(String time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate date = LocalDate.parse(time, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 }

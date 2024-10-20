@@ -39,7 +39,7 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <div class="input">
-                        <input type="text" id="name" name="name" placeholder="Tìm kiếm" value="${param.customerName}" onchange="this.form.submit()">
+                        <input type="text" id="customerName" name="customerName" placeholder="Tìm kiếm" value="${param.customerName}" onchange="this.form.submit()">
                     </div>
                 </form>
             </div>
